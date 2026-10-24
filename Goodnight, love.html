@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goodnight, love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f1230; --bg2:#1a1d4a; --ink:#ece9f7; --mute:#a9a6c9; --moon:#f3e9c8;
+  --rose:#e8a5b8; --lav:#8c86d9; --line:rgba(236,233,247,.16); --card:rgba(255,255,255,.05);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){--bg:#eceaf8; --bg2:#d9d5f2; --ink:#1f2050; --mute:#55527f; --moon:#c79a3b; --rose:#c4607f; --lav:#5b53c4; --line:rgba(31,32,80,.2); --card:rgba(255,255,255,.55)}
+}
+:root[data-theme="dark"]{--bg:#0f1230; --bg2:#1a1d4a}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 70%) fixed,var(--bg);color:var(--ink);font:400 17px/1.65 "DM Sans",system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:0 22px 80px}
+h1,h2{font-family:"Fraunces",Georgia,serif;font-weight:300;line-height:1.15;margin:0}
+h1{font-size:clamp(2.6rem,10vw,4.4rem);letter-spacing:-.02em;text-align:center}
+h2{font-size:1.9rem;margin-bottom:.4rem}
+p{margin:0 0 1em;color:var(--mute);max-width:52ch}
+.hero{text-align:center;padding:9vh 0 4vh}
+.hero p{margin:1rem auto 0}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+main{position:relative;z-index:1}
+section{padding:54px 0 10px}
+.orbwrap{display:grid;place-items:center;margin:36px 0 10px;height:300px}
+.orb{width:150px;height:150px;border-radius:50%;display:grid;place-items:center;text-align:center;
+  background:radial-gradient(circle at 35% 30%,var(--moon),var(--rose) 45%,var(--lav) 100%);
+  box-shadow:0 0 80px 10px color-mix(in srgb,var(--lav) 45%,transparent);
+  transform:scale(1);transition:transform 4s ease-in-out;color:#1b1c48;font-family:"Fraunces",serif;font-size:1.15rem}
+.orb span{display:block;font:500 .85rem "DM Sans",sans-serif;opacity:.75}
+.cue{text-align:center;min-height:3.2em;color:var(--ink)}
+button{font:500 1rem "DM Sans",sans-serif;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.7em 1.5em;cursor:pointer;transition:background .2s,border-color .2s}
+button:hover{border-color:var(--rose)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.center{text-align:center}
+.sound{display:flex;flex-wrap:wrap;align-items:center;gap:16px;border:1px solid var(--line);border-radius:20px;padding:20px;background:var(--card)}
+.sound label{display:flex;align-items:center;gap:10px;color:var(--mute);flex:1;min-width:180px}
+input[type=range]{flex:1;accent-color:var(--rose)}
+ul{list-style:none;margin:18px 0 0;padding:0}
+li{border-bottom:1px solid var(--line)}
+li label{display:flex;gap:14px;align-items:flex-start;padding:15px 2px;cursor:pointer}
+li input{appearance:none;flex:none;width:24px;height:24px;margin-top:2px;border:1.5px solid var(--mute);border-radius:50%;display:grid;place-items:center;cursor:pointer;transition:all .25s}
+li input:checked{background:var(--rose);border-color:var(--rose)}
+li input:checked::after{content:"";width:6px;height:11px;border:solid #1b1c48;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+li input:checked+span{opacity:.5;text-decoration:line-through;text-decoration-color:var(--mute)}
+li small{display:block;color:var(--mute);font-size:.88rem;line-height:1.45}
+.note{margin-top:30px;padding:34px 28px;border-radius:26px;background:linear-gradient(160deg,color-mix(in srgb,var(--rose) 18%,transparent),var(--card));border:1px solid var(--line)}
+.note p{font:italic 300 1.35rem/1.6 "Fraunces",Georgia,serif;color:var(--ink);max-width:none}
+.note .sig{font:400 1rem "DM Sans",sans-serif;color:var(--mute);margin:0}
+.awake{padding:30px 0 0;color:var(--mute);font-size:.95rem}
+@media (prefers-reduced-motion:reduce){.orb{transition-duration:.01s!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<canvas class="stars" id="stars" aria-hidden="true"></canvas>
+<main>
+  <header class="hero">
+    <h1>Goodnight, love.</h1>
+    <p>You don’t have to fall asleep tonight. You only have to let your body rest, a little at a time. This page is here to help you slow down.</p>
+  </header>
+
+  <section id="breathe">
+    <h2>Breathe with the moon</h2>
+    <p>The 4-7-8 rhythm: breathe in for four, hold for seven, out for eight. Follow the glow. Three or four rounds is plenty.</p>
+    <div class="orbwrap"><div class="orb" id="orb"><div id="count">Ready<span>tap begin</span></div></div></div>
+    <p class="cue center" id="cue" aria-live="polite">Sit or lie comfortably and soften your shoulders.</p>
+    <div class="center"><button id="go">Begin breathing</button></div>
+  </section>
+
+  <section id="sound">
+    <h2>Soft sound</h2>
+    <p>Gentle, low noise to quiet the thoughts that won’t stop talking.</p>
+    <div class="sound">
+      <button id="snd" aria-pressed="false">Play sound</button>
+      <label>Volume <input type="range" id="vol" min="0" max="100" value="35" aria-label="Volume"></label>
+    </div>
+  </section>
+
+  <section id="winddown">
+    <h2>Tonight’s wind-down</h2>
+    <p>Tick off what you can. Skip what you can’t. Nothing here is a test.</p>
+    <ul id="list">
+      <li><label><input type="checkbox"><span>Put the phone face down<small>Bright screens tell your brain it’s still daytime.</small></span></label></li>
+      <li><label><input type="checkbox"><span>Dim the lights<small>Warm and low, as if the sun is setting in your room.</small></span></label></li>
+      <li><label><input type="checkbox"><span>Drink something warm and caffeine-free<small>Chamomile, milk, or just warm water.</small></span></label></li>
+      <li><label><input type="checkbox"><span>Write down what’s on your mind<small>Get tomorrow’s worries out of your head and onto paper.</small></span></label></li>
+      <li><label><input type="checkbox"><span>Relax from your toes upward<small>Tense each part for five seconds, then let it go.</small></span></label></li>
+      <li><label><input type="checkbox"><span>Cool, dark, quiet room<small>A slightly cooler room helps the body settle.</small></span></label></li>
+    </ul>
+    <div class="center" style="margin-top:22px"><button id="reset">Clear checklist</button></div>
+  </section>
+
+  <section>
+    <div class="note">
+      <p>“Jodio tomar ghum na ashe, I am still here, aar ajk chad dekhso... You’re allowed to have your thoughts, but you also need to rest well just because you’re you. I’m thinking of you, and I’m so proud of you. Sleep well, my love.”</p>
+      <p class="sig">Yours, always</p>
+    </div>
+  </section>
+</main>
+
+<script>
+// Stars
+(function(){
+  var c=document.getElementById('stars'),x=c.getContext('2d'),s=[];
+  function size(){c.width=innerWidth;c.height=innerHeight;s=[];for(var i=0;i<90;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.3+.2,p:Math.random()*6});}
+  function draw(t){x.clearRect(0,0,c.width,c.height);var dark=!matchMedia('(prefers-color-scheme: light)').matches;
+    if(dark)s.forEach(function(a){x.globalAlpha=.35+.35*Math.sin(t/1800+a.p);x.fillStyle='#f3e9c8';x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fill();});
+    if(!matchMedia('(prefers-reduced-motion: reduce)').matches)requestAnimationFrame(draw);}
+  size();addEventListener('resize',size);requestAnimationFrame(draw);
+})();
+
+// Breathing 4-7-8
+(function(){
+  var orb=document.getElementById('orb'),count=document.getElementById('count'),cue=document.getElementById('cue'),go=document.getElementById('go');
+  var running=false,timer=null,round=0;
+  var phases=[{n:'Breathe in',t:4,s:1.6,msg:'Slowly through your nose.'},{n:'Hold',t:7,s:1.6,msg:'Stay soft and still.'},{n:'Breathe out',t:8,s:1,msg:'Long and slow through your mouth.'}];
+  function run(i,left){
+    if(!running)return;var p=phases[i];
+    if(left===p.t){orb.style.transitionDuration=(i===1?0.01:p.t)+'s';orb.style.transform='scale('+p.s+')';cue.textContent=p.msg;if(i===0)round++;}
+    count.innerHTML=p.n+'<span>'+left+'</span>';
+    timer=setTimeout(function(){
+      if(left>1)run(i,left-1);
+      else if(i<2)run(i+1,phases[i+1].t);
+      else if(round>=4){stop('Lovely. Stay as you are, or begin again.');}
+      else run(0,phases[0].t);
+    },1000);
+  }
+  function stop(msg){running=false;clearTimeout(timer);orb.style.transitionDuration='2s';orb.style.transform='scale(1)';count.innerHTML='Ready<span>tap begin</span>';cue.textContent=msg||'Whenever you’re ready.';go.textContent='Begin breathing';round=0;}
+  go.addEventListener('click',function(){
+    if(running){stop('Paused. Come back whenever you like.');return;}
+    running=true;round=0;go.textContent='Stop';run(0,4);
+  });
+})();
+
+// Soft brown noise
+(function(){
+  var btn=document.getElementById('snd'),vol=document.getElementById('vol'),ctx=null,gain=null,src=null,on=false;
+  function build(){
+    ctx=new (window.AudioContext||window.webkitAudioContext)();
+    var len=ctx.sampleRate*4,buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0),last=0;
+    for(var i=0;i<len;i++){var w=Math.random()*2-1;last=(last+.02*w)/1.02;d[i]=last*3.5;}
+    src=ctx.createBufferSource();src.buffer=buf;src.loop=true;
+    var f=ctx.createBiquadFilter();f.type='lowpass';f.frequency.value=700;
+    gain=ctx.createGain();gain.gain.value=0;
+    src.connect(f);f.connect(gain);gain.connect(ctx.destination);src.start();
+  }
+  btn.addEventListener('click',function(){
+    if(!ctx)build();
+    on=!on;
+    if(on&&ctx.state==='suspended')ctx.resume();
+    gain.gain.setTargetAtTime(on?vol.value/100:0,ctx.currentTime,.6);
+    btn.textContent=on?'Pause sound':'Play sound';btn.setAttribute('aria-pressed',on);
+  });
+  vol.addEventListener('input',function(){if(gain&&on)gain.gain.setTargetAtTime(vol.value/100,ctx.currentTime,.1);});
+})();
+
+// Checklist (remembered for tonight only)
+(function(){
+  var boxes=[].slice.call(document.querySelectorAll('#list input')),key='winddown-'+new Date().toDateString();
+  try{var saved=JSON.parse(localStorage.getItem(key)||'[]');boxes.forEach(function(b,i){b.checked=!!saved[i];});}catch(e){}
+  function save(){try{localStorage.setItem(key,JSON.stringify(boxes.map(function(b){return b.checked;})));}catch(e){}}
+  boxes.forEach(function(b){b.addEventListener('change',save);});
+  document.getElementById('reset').addEventListener('click',function(){boxes.forEach(function(b){b.checked=false;});save();});
+})();
+</script>
+</body>
+</html>
